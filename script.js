@@ -1,6 +1,20 @@
 const input = document.querySelector("#input")
 const go = document.querySelector("#go")
+
 const inputpage = document.querySelector('.landingpage')
+
+const playerdatamain = document.querySelector(".playersdata")
+
+const container = document.querySelector(".container")
+
+
+playerdatamain.style.display = "none"
+container.style.display = "none"  
+
+
+
+
+
 const playerlimit = 5
 
 let playerlist = []
@@ -24,6 +38,7 @@ go.addEventListener('click',()=>{
 const playerinputs = document.querySelector('.playerinputs')
 
 function playerinput(n){
+    playerdatamain.style.display = "flex"
     console.log("hi")
     for(let i =0 ;i<n;i++){
         const d = document.createElement("div")
@@ -68,10 +83,11 @@ function playerinput(n){
     })
     
 }
-const playerdatamain = document.querySelector(".playersdata")
+
 
 function gamers(playerlist){
     playerdatamain.style.display = "none" 
+    container.style.display = "flex"
 }
 
 

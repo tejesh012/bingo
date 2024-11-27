@@ -118,9 +118,9 @@ function giverandomelement(arr){
 
 
 
-while (game==true){
+// while (game==true){
 
-}
+// }
 
 
 

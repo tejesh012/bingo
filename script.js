@@ -1,23 +1,17 @@
 const input = document.querySelector("#input")
 const go = document.querySelector("#go")
-
 const inputpage = document.querySelector('.landingpage')
-
 const playerdatamain = document.querySelector(".playersdata")
-
 const container = document.querySelector(".container")
-
-
 playerdatamain.style.display = "none"
 container.style.display = "none"  
 
 
-
-
-
 const playerlimit = 5
-
 let playerlist = []
+let playernumberlist = []
+let currentplayer =0
+let game = true
 
 
 go.addEventListener('click',()=>{
@@ -25,6 +19,7 @@ go.addEventListener('click',()=>{
     if (!isNaN(x) && 2<= x && x <=5 ){
         inputpage.style.display = "none";
         playerinput(x)
+        randomnumbers(x)
     }
     else{
         input.classList.add('shake');
@@ -65,7 +60,7 @@ function playerinput(n){
             let PNAME = playername.value.trim()
             if ((PNAME) && !playerlist.includes(PNAME) ){
                 playerlist.push(PNAME)
-            }
+            }   
             else{
                 playerlist = []
                 playername.classList.add("shake")
@@ -97,13 +92,17 @@ function gamers(playerlist){
 
 
 const gameboard = document.querySelector(".gameboard");
-let numbers = []
-for ( let i = 0 ; i<25 ; i++){
-    numbers[i] = i+1
+function randomnumbers(x){
+    let numbers = []
+    for ( let i = 0 ; i<25 ; i++){
+        numbers[i] = i+1
+    }
+    for (let j =0;j<x;j++){
+        playernumberlist[i]= randomise(numbers)
+    }
 }
-console.log(numbers)
 
-function hi(array){
+function randomise(array){
     for (let i =0;i<25;i++){
         
         let randomindex = Math.floor(Math.random()*24);
@@ -111,11 +110,23 @@ function hi(array){
     }
     return array
 }
-shufflearr = hi([...numbers])
+
 function giverandomelement(arr){
     poped = arr.pop()
     return poped
 }
+
+
+
+while (game==true){
+
+}
+
+
+
+
+
+
 for(let i =0; i<5;i++){
     let newrow = document.createElement("div")
     for(let j = 0 ;j<5;j++){
@@ -133,7 +144,12 @@ const boxes = document.querySelectorAll('.box')
 boxes.forEach(box =>{
     box.addEventListener('click',()=>{
         console.log("clicked");
+        if (box.classList.contains("marked")){
+            alert("already clicked")
+        }
+        else
         box.classList.add('marked');
+
     })
 })
 

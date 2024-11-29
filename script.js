@@ -178,7 +178,7 @@ function checkWin(previousplayer,clickedcords) {
     patterncount += checkDiagonal(clickedcords)
     leaderboard[previousplayer] = patterncount*1000
     if (patterncount>=5){
-        console.log("we have a winner")
+        
         return true
     }
 
@@ -237,7 +237,7 @@ function checkDiagonal(cordlist) {
     }
     if (check2 == 5){
         diacount+=1
-        console.log("reversedia")
+        
     }
     return diacount
 }

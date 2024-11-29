@@ -1,180 +1,287 @@
-const input = document.querySelector("#input")
-const go = document.querySelector("#go")
-const inputpage = document.querySelector('.landingpage')
-const playerdatamain = document.querySelector(".playersdata")
-const container = document.querySelector(".container")
-playerdatamain.style.display = "none"
-container.style.display = "none"  
+// DOM Elements
+const inputField = document.querySelector("#input");
+const startButton = document.querySelector("#go");
+const landingPage = document.querySelector(".landingpage");
+const playerDataSection = document.querySelector(".playersdata");
+const gameContainer = document.querySelector(".container");
+const playerInputsContainer = document.querySelector(".playerinputs");
+const gameBoard = document.querySelector(".gameboard");
+const currentPlayerAnnouncement = document.querySelector("#cpannounce");
+const winnerpage = document.querySelector(".winner")
+const scoreboard = document.querySelector(".scorelist")
+const countdownpage = document.querySelector(".countdown")
+const playerchange = document.querySelector(".playerchange")
+const cd = document.querySelector(".cd")
+// Initial State
+playerDataSection.style.display = "none";
+gameContainer.style.display = "none";
+winnerpage.style.display = "none";
+countdownpage.style.display = "none";
 
+const MAX_PLAYERS = 5;
+let playerNames = [];
+let clickedNumbers = [];
+let playerBoards = [];
+let leaderboard = [];
+let countdowncap = 2;
 
-const playerlimit = 5
-let playerlist = []
-let playernumberlist = []
-let currentplayer =0
-let game = true
+cd.innerHTML = countdowncap
 
+// Event Listeners
+startButton.addEventListener("click", () => {
+    const playerCount = parseInt(inputField.value, 10);
 
-go.addEventListener('click',()=>{
-    let x = input.value
-    if (!isNaN(x) && 2<= x && x <=5 ){
-        inputpage.style.display = "none";
-        playerinput(x)
-        randomnumbers(x)
+    if (!isNaN(playerCount) && playerCount >= 2 && playerCount <= MAX_PLAYERS) {
+        landingPage.style.display = "none";
+        displayPlayerInputFields(playerCount);
+    } else {
+        showShakeEffect(inputField);
     }
-    else{
-        input.classList.add('shake');
-        setTimeout(() => {
-            input.classList.remove('shake');
-        }, 350);
+});
+
+function showShakeEffect(element) {
+    element.classList.add("shake");
+    setTimeout(() => element.classList.remove("shake"), 350);
+}
+
+
+function displayPlayerInputFields(playerCount) {
+    playerDataSection.style.display = "flex";
+    playerInputsContainer.innerHTML = ""; 
+
+    for (let i = 0; i < playerCount; i++) {
+        const playerDiv = document.createElement("div");
+        const label = document.createElement("p");
+        const input = document.createElement("input");
+
+        label.textContent = `Player ${i + 1}:`;
+        input.placeholder = "Enter Name";
+        label.classList.add("player-data-label");
+        input.classList.add("playerdatainput");
+
+        playerDiv.classList.add("playerdatadiv");
+        playerDiv.append(label, input);
+        playerInputsContainer.append(playerDiv);
     }
-})
 
+    const startGameButton = document.createElement("button");
+    startGameButton.textContent = "Start";
+    startGameButton.classList.add("startgamebutton");
+    playerInputsContainer.append(startGameButton);
 
-const playerinputs = document.querySelector('.playerinputs')
+    startGameButton.addEventListener("click", () => {
+        const inputs = document.querySelectorAll(".playerdatainput");
+        const newPlayerNames = [];
 
-function playerinput(n){
-    playerdatamain.style.display = "flex"
-    console.log("hi")
-    for(let i =0 ;i<n;i++){
-        const d = document.createElement("div")
-        const p = document.createElement("p")
-        const inputfield = document.createElement("input")
-        p.textContent = `Player ${i+1}:`
-        inputfield.placeholder = 'Enter Name'
-        p.classList.add('playerdatapara')
-        inputfield.classList.add('playerdatainput')
-
-        d.classList.add('playerdatadiv')
-        d.append(p)
-        d.append(inputfield)
-        playerinputs.append(d)
-    }
-    const button = document.createElement('button')
-    button.textContent = "Start"
-    button.classList.add('playerdatabutton')
-    playerinputs.append(button)
-
-    button.addEventListener('click',()=>{
-        const playernames = document.querySelectorAll('.playerdatainput')
-        playernames.forEach(playername => {
-            let PNAME = playername.value.trim()
-            if ((PNAME) && !playerlist.includes(PNAME) ){
-                playerlist.push(PNAME)
-            }   
-            else{
-                playerlist = []
-                playername.classList.add("shake")
-                button.classList.add("shake")
-                setTimeout(() => {
-                    button.classList.remove("shake")
-                    playername.classList.remove("shake")
-                }, 350);
+        inputs.forEach(input => {
+            const name = input.value.trim();
+            if (name && !newPlayerNames.includes(name)) {
+                newPlayerNames.push(name);
+            } else {
+                newPlayerNames.length = 0; 
+                showShakeEffect(input);
+                showShakeEffect(startGameButton);
             }
         });
-        if (playerlist.length == n){
-            gamers(playerlist)}
-        else
-            {console.log("still trying")}
-    })
-    
-}
 
-
-function gamers(playerlist){
-    playerdatamain.style.display = "none" 
-    container.style.display = "flex"
-}
-
-
-
-
-
-
-
-const gameboard = document.querySelector(".gameboard");
-function randomnumbers(x){
-    let numbers = []
-    for ( let i = 0 ; i<25 ; i++){
-        numbers[i] = i+1
-    }
-    for (let j =0;j<x;j++){
-        playernumberlist[i]= randomise(numbers)
-    }
-}
-
-function randomise(array){
-    for (let i =0;i<25;i++){
-        
-        let randomindex = Math.floor(Math.random()*24);
-        [array[randomindex] ,array[i]] = [array[i],array[randomindex]]
-    }
-    return array
-}
-
-function giverandomelement(arr){
-    poped = arr.pop()
-    return poped
-}
-
-
-
-// while (game==true){
-
-// }
-
-
-
-
-
-
-for(let i =0; i<5;i++){
-    let newrow = document.createElement("div")
-    for(let j = 0 ;j<5;j++){
-        let box = document.createElement('div')
-        value = giverandomelement(shufflearr)
-        box.innerHTML = value
-        box.classList.add(`cords-{i}{j}` ,`num-{value}`,`box`)
-        newrow.append(box)
-    }
-    newrow.classList.add(`row`)
-    gameboard.append(newrow)
-    
-}
-const boxes = document.querySelectorAll('.box')
-boxes.forEach(box =>{
-    box.addEventListener('click',()=>{
-        console.log("clicked");
-        if (box.classList.contains("marked")){
-            alert("already clicked")
+        if (newPlayerNames.length === playerCount) {
+            playerNames = newPlayerNames;
+            initializeGame(playerCount);
         }
-        else
-        box.classList.add('marked');
+    });
+}
 
-    })
-})
-
-
-
-
-
-
-
+// Game Initialization
+function initializeGame(playerCount) {
+    playerDataSection.style.display = "none";
+    gameContainer.style.display = "flex";
+    generatePlayerBoards(playerCount);
+    renderGameBoard(0, playerCount);
+}
 
 
+function generatePlayerBoards(playerCount) {
+    const allNumbers = Array.from({ length: 25 }, (_, i) => i + 1);
+
+    playerBoards = Array.from({ length: playerCount }, () => shuffleArray([...allNumbers]));
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function renderGameBoard(currentPlayer, playerCount) {
+    gameBoard.innerHTML = ""; 
+    currentPlayerAnnouncement.textContent = `Current Player: ${playerNames[currentPlayer]}`;
+    let clickedcords = []
+    let clickedcordsindex = 0
+    const playerBoard = playerBoards[currentPlayer];
+    playerBoard.forEach((value, index) => {
+        const row = Math.floor(index / 5);
+        const column = index % 5;
+
+        const cell = document.createElement("div");
+        cell.classList.add(`cords-${row}${column}`, `num-${value}`, "box");
+        cell.textContent = value;
+        
+        if (clickedNumbers.includes(value)) {
+            cell.classList.add("marked");
+            clickedcords[clickedcordsindex]=cell.classList[0]
+            clickedcordsindex+=1
+        }
+
+        cell.addEventListener("click", () => {
+            if (cell.classList.contains("marked")) {
+                alert("This number is already clicked!");
+            } else {
+                cell.classList.add("marked");
+                previousplayer = currentPlayer
+                clickedNumbers.push(value);
+                clickedcords[clickedcordsindex]=cell.classList[0]
+                clickedcordsindex+=1
+                currentPlayer = (currentPlayer + 1) % playerCount;
+                updateGame(previousplayer,currentPlayer, playerCount,clickedcords);
+            }
+        });
+
+        if (index % 5 === 0) {
+            const rowDiv = document.createElement("div");
+            rowDiv.classList.add("row");
+            gameBoard.append(rowDiv);
+        }
+
+        gameBoard.lastChild.append(cell);
+    });
+}
+
+function updateGame(previousplayer,currentPlayer, playerCount,clickedcords) {
+    if (checkWin(previousplayer,clickedcords)){
+        gameBoard.innerHTML = `winner ${previousplayer}`
+        printleaderboard()
+    }
+    else{
+        countdownfun(currentPlayer,playerCount)
+        
+    }
+
+}
 
 
+function checkWin(previousplayer,clickedcords) {
+    patterncount = 0
+    patterncount += checkRow(clickedcords)
+    patterncount += checkColumn(clickedcords)
+    patterncount += checkDiagonal(clickedcords)
+    leaderboard[previousplayer] = patterncount*1000
+    if (patterncount>=5){
+        console.log("we have a winner")
+        return true
+    }
 
-// --------------TIMEOUT--------------
+    return false
+}
+
+function checkRow(cordlist) {
+    let rowcount = 0
+    for(let i=0;i<5;i++){
+        let check = 0
+        for (let j =0;j<5;j++){
+            if (cordlist.includes(`cords-${j}${i}`)){
+                check+=1
+            }
+        }
+        if (check == 5){
+            rowcount+=1
+        }
+    }
+    return rowcount
+}
+function checkColumn(cordlist) {
+    let colcount = 0
+    for(let i=0;i<5;i++){
+        check = 0
+        for (let j =0;j<5;j++){                                                            
+            if (cordlist.includes(`cords-${j}${i}`)){
+                check+=1
+            }
+        }
+        if (check == 5){
+            colcount+=1
+        }
+
+    }
+    return colcount
+}
+function checkDiagonal(cordlist) {
+    diacount = 0
+    let check1 = 0
+    let check2 = 0
+    for(let i=0;i<5;i++){
+        
+        if (cordlist.includes(`cords-${i}${i}`)){
+            check1+=1
+        }
+    }
+    if (check1 == 5){
+        diacount+=1
+    }
+    for(let i=0;i<5;i++){
+        if (cordlist.includes(`cords-${i}${4-i}`)){
+            check2+=1
+            
+        }
+    }
+    if (check2 == 5){
+        diacount+=1
+        console.log("reversedia")
+    }
+    return diacount
+}
 
 
-// for(let i=25;i>=1;i--){
-//     setTimeout(()=>{
-//         console.log(i)
-//         gameboard.textContent = i;
-//     },(26-i)*1000);
-//     if(i==1){
-//         gameboard.textContent = 'switchingsides';
-//     }
-
-// }
+function printleaderboard(){
     
+    for(let i =0;i<leaderboard.length;i++){
+        let score = document.createElement("div")
+        score.innerHTML = `${playerNames[i]} : ${leaderboard[i]}`
+        scoreboard.append(score)
+    }
+    gameContainer.style.display = "none";
+    winnerpage.style.display = "flex"
+}
+
+function countdownfun(currentPlayer, playerCount){
+    let count= countdowncap
+    swappages()
+    playerchange.innerHTML = `Switching to "${playerNames[currentPlayer]} in"`
+    renderGameBoard(currentPlayer, playerCount)
+    
+    const countdowninterval = setInterval(() => {
+        count-=1
+        if (count>0){
+            cd.innerHTML = count
+        }
+        else{
+            clearInterval(countdowninterval)
+            swappages()
+            cd.innerHTML = countdowncap
+        }
+    }, 1000);
+    
+    
+}
+
+function swappages(){
+    if(countdownpage.style.display=== "flex"){
+        countdownpage.style.display = "none"
+        gameContainer.style.display = "flex"
+    }
+    else{
+        countdownpage.style.display = "flex"
+        gameContainer.style.display = "none"
+    }
+}

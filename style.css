@@ -21,6 +21,7 @@ body{
     padding: 0;
     border: 0;
 }
+
 .nav{
     height: 15%;
     display: flex;
@@ -29,6 +30,37 @@ body{
     /* background-color: aqua; */
     
 }
+
+.countdown{
+    height: 65%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    
+}
+
+.playerchange{
+    font-size: large;
+}
+.idkbro{
+    display: flex;
+
+}
+.idkbro p{
+    font-size:x-small;
+    display:flex;
+    align-items: center;
+    margin-left: 3px;
+    /* background-color: brown; */
+}
+
+.cd{
+    font-size: xx-large;
+}
+
 .landingpage{
     height: 85%;
     width: 100%;
@@ -86,7 +118,7 @@ body{
     text-align: center;
 }
 
-.playerdatabutton{
+.startgamebutton{
     margin:15px;
     height: 25px;
     width: 120px;
@@ -187,6 +219,36 @@ body{
     display: flex;
     
     
+}
+
+.winner{
+    /* background-color: red; */
+    height: 85%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#leaderboardheading{
+    /* background-color: green; */
+    border-bottom: 2px solid white;
+    width: 270px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scorelist{
+    height: 200px;
+    width: 250px;
+    margin-top: 10px;
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 

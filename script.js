@@ -190,7 +190,7 @@ function checkRow(cordlist) {
     for(let i=0;i<5;i++){
         let check = 0
         for (let j =0;j<5;j++){
-            if (cordlist.includes(`cords-${j}${i}`)){
+            if (cordlist.includes(`cords-${i}${j}`)){
                 check+=1
             }
         }
@@ -257,7 +257,7 @@ function printleaderboard(){
 function countdownfun(currentPlayer, playerCount){
     let count= countdowncap
     swappages()
-    playerchange.innerHTML = `Switching to "${playerNames[currentPlayer]} in"`
+    playerchange.innerHTML = `Switching to "${playerNames[currentPlayer]}" in`
     renderGameBoard(currentPlayer, playerCount)
     
     const countdowninterval = setInterval(() => {
